@@ -6,7 +6,7 @@ import { ThemeProvider } from 'emotion-theming';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { css } from 'react-emotion';
 
-require("prismjs/themes/prism-tomorrow.css");
+import '../prism-nightowl.css';
 
 import Layout from '../components/layouts/post';
 import { rhythm, scale } from '../utils/typography';

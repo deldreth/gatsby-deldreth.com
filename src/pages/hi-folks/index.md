@@ -17,8 +17,27 @@ didn’t listen. She packed her seven versalia, put her initial into the belt an
 made herself on the way.
 
 ```javascript
+// comment
 function thing() {
   return 'stuff';
+}
+
+class Thing {
+  thing = () => {
+    const stuff = 'thing';
+    var things = 'stuff';
+    let what = 'woah';
+  }
+
+  render () {
+    return (
+      <Yeah/>
+    );
+  }
+}
+
+export default {
+  stuff: 'thing'
 }
 ```
 

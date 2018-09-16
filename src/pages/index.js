@@ -33,7 +33,67 @@ class BlogIndex extends React.Component {
               <div key={node.fields.slug}>
                 <h3
                   style={{
-                    marginBottom: rhythm(1 / 4),
+                    marginBottom: rhythm(1 / 2),
+                  }}
+                >
+                  <Link to={node.fields.slug}>
+                    {title}
+                  </Link>
+                </h3>
+                <Date>{node.frontmatter.date}</Date>
+
+                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              </div>
+            )
+          })}
+
+          {posts.map(({ node }) => {
+            const title = get(node, 'frontmatter.title') || node.fields.slug
+            return (
+              <div key={node.fields.slug}>
+                <h3
+                  style={{
+                    marginBottom: rhythm(1 / 2),
+                  }}
+                >
+                  <Link to={node.fields.slug}>
+                    {title}
+                  </Link>
+                </h3>
+                <Date>{node.frontmatter.date}</Date>
+
+                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              </div>
+            )
+          })}
+
+          {posts.map(({ node }) => {
+            const title = get(node, 'frontmatter.title') || node.fields.slug
+            return (
+              <div key={node.fields.slug}>
+                <h3
+                  style={{
+                    marginBottom: rhythm(1 / 2),
+                  }}
+                >
+                  <Link to={node.fields.slug}>
+                    {title}
+                  </Link>
+                </h3>
+                <Date>{node.frontmatter.date}</Date>
+
+                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              </div>
+            )
+          })}
+
+          {posts.map(({ node }) => {
+            const title = get(node, 'frontmatter.title') || node.fields.slug
+            return (
+              <div key={node.fields.slug}>
+                <h3
+                  style={{
+                    marginBottom: rhythm(1 / 2),
                   }}
                 >
                   <Link to={node.fields.slug}>
@@ -57,7 +117,7 @@ export default BlogIndex
 const Date = styled('div')`
   color: #68D7C3;
   ${scale(-1/9)};
-  margin: 0 0 ${rhythm(0.2)};
+  margin: 0 0 ${rhythm(1/3)} 0;
 `;
 
 export const pageQuery = graphql`

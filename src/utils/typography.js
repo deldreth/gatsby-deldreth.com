@@ -1,12 +1,13 @@
 import Typography from 'typography';
 
 const typography = new Typography({
-  bodyColor: '#F7F7F7',
+  // bodyColor: '#011627',
+  bodyColor: '#D6DEEB',
   headerColor: '#82AAFF',
   // headerFontFamily: ['FiraSans', 'sans-serif'],
-  bodyFontFamily: ['Fira Sans', 'sans-serif'],
+  // bodyFontFamily: ['Fira Sans', 'sans-serif'],
   headerFontFamily: ['Source Serif Pro', 'sans-serif'],
-  // bodyFontFamily: ['Source Serif Pro', 'sans-serif'],
+  bodyFontFamily: ['Source Serif Pro', 'sans-serif'],
   googleFonts: [
     {
       name: 'Source Serif Pro',
@@ -28,6 +29,12 @@ const typography = new Typography({
         '500',
         '600',
         '700'
+      ],
+    },
+    {
+      name: 'Fira Mono',
+      styles: [
+        '400',
       ],
     },
   ],
