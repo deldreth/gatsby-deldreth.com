@@ -28,9 +28,10 @@ class BlogIndex extends React.Component {
           />
 
           {posts.map(({ node }) => {
-            const title = get(node, 'frontmatter.title') || node.fields.slug
+            const title = get(node, 'frontmatter.title') || node.fields.slug;
+            console.log(node.frontmatter.tags);
             return (
-              <div key={node.fields.slug}>
+              <div key={node.fields.slug} style={{display: 'flex', flexDirection: 'column'}}>
                 <h3
                   style={{
                     marginBottom: rhythm(1 / 2),
@@ -42,67 +43,13 @@ class BlogIndex extends React.Component {
                 </h3>
                 <Date>{node.frontmatter.date}</Date>
 
-                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-              </div>
-            )
-          })}
+                <p style={{flex: 1 }}dangerouslySetInnerHTML={{ __html: node.excerpt }} />
 
-          {posts.map(({ node }) => {
-            const title = get(node, 'frontmatter.title') || node.fields.slug
-            return (
-              <div key={node.fields.slug}>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 2),
-                  }}
-                >
-                  <Link to={node.fields.slug}>
-                    {title}
-                  </Link>
-                </h3>
-                <Date>{node.frontmatter.date}</Date>
-
-                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-              </div>
-            )
-          })}
-
-          {posts.map(({ node }) => {
-            const title = get(node, 'frontmatter.title') || node.fields.slug
-            return (
-              <div key={node.fields.slug}>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 2),
-                  }}
-                >
-                  <Link to={node.fields.slug}>
-                    {title}
-                  </Link>
-                </h3>
-                <Date>{node.frontmatter.date}</Date>
-
-                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-              </div>
-            )
-          })}
-
-          {posts.map(({ node }) => {
-            const title = get(node, 'frontmatter.title') || node.fields.slug
-            return (
-              <div key={node.fields.slug}>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 2),
-                  }}
-                >
-                  <Link to={node.fields.slug}>
-                    {title}
-                  </Link>
-                </h3>
-                <Date>{node.frontmatter.date}</Date>
-
-                <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+                {node.frontmatter.tags.length && (
+                  <Tags>
+                    {node.frontmatter.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
+                  </Tags>
+                )}
               </div>
             )
           })}
@@ -112,12 +59,29 @@ class BlogIndex extends React.Component {
   }
 }
 
-export default BlogIndex
+export default BlogIndex;
 
 const Date = styled('div')`
   color: #68D7C3;
   ${scale(-1/9)};
   margin: 0 0 ${rhythm(1/3)} 0;
+`;
+
+const Tags = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+`;
+
+const Tag = styled('div')`
+  font-size: ${rhythm(1/2)};
+  font-family: 'Fira Sans';
+  color: #011627;
+  /* background-color: #ADDB67; */
+  background-color: #ECC48D;
+  border-radius: 50px;
+  margin: 4px 4px 0px 0px;
+  padding: 2px 16px;
 `;
 
 export const pageQuery = graphql`
@@ -137,7 +101,8 @@ export const pageQuery = graphql`
           }
           frontmatter {
             date(formatString: "MMMM D YYYY")
-            title
+            title,
+            tags
           }
         }
       }
