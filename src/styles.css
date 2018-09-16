@@ -1,0 +1,43 @@
+body {
+  background-color: #0B2942;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url('./assets/fonts/FiraSansCompressed-Light.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url('./assets/fonts/FiraSansCompressed-Medium.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url('./assets/fonts/FiraSansCompressed-MediumItalic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url('./assets/fonts/FiraSansCompressed-Italic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'FiraSans';
+  src: url('./assets/fonts/FiraSansCompressed-Regular.ttf') format('');
+  font-style: normal;
+  font-weight: 500;
+}
