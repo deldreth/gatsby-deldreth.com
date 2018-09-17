@@ -2,6 +2,7 @@ import React from 'react'
 
 import kebabCase from 'lodash/kebabCase'
 import { graphql } from 'gatsby'
+import get from 'lodash/get'
 import Helmet from 'react-helmet'
 import { ThemeProvider } from 'emotion-theming'
 import styled from 'react-emotion'

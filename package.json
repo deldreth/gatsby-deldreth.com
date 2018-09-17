@@ -11,7 +11,7 @@
     "emotion-theming": "^9.2.6",
     "gatsby": "next",
     "gatsby-image": "^1.0.55",
-    "gatsby-plugin-emotion": "^1.1.17",
+    "gatsby-plugin-emotion": "^2.0.0-rc.5",
     "gatsby-plugin-feed": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-manifest": "next",
