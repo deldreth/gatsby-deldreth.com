@@ -57,7 +57,6 @@ const Container = styled('div')`
 `;
 
 const Excerpt = styled('p')`
-  flex: 1;
   &:hover {
     cursor: pointer;
   }
