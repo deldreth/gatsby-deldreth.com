@@ -1,39 +1,28 @@
 import Typography from 'typography';
 
 const typography = new Typography({
-  // bodyColor: '#011627',
   bodyColor: '#D6DEEB',
   headerColor: '#82AAFF',
-  // headerFontFamily: ['FiraSans', 'sans-serif'],
-  // bodyFontFamily: ['Fira Sans', 'sans-serif'],
-  headerFontFamily: ['Source Serif Pro', 'sans-serif'],
-  bodyFontFamily: ['Source Serif Pro', 'sans-serif'],
+  headerFontFamily: ['Source Serif Pro', 'serif'],
+  bodyFontFamily: ['Source Serif Pro', 'serif'],
+  bodyWeight: 300,
+  headerWeight: 500,
   googleFonts: [
     {
       name: 'Source Serif Pro',
-      styles: ['400', '400i', '500', '600'],
+      styles: ['500'],
     },
     {
       name: 'Fira Sans',
-      styles: ['100', '300', '300i', '400', '400i', '500', '600', '700'],
+      styles: ['400', '400i'],
     },
     {
       name: 'Fira Mono',
       styles: ['400'],
     },
   ],
-  overrideStyles: ({ adjustFontSizeTo, rhythm }, options, styles) => ({
-    'h1, h3': {
-      margin: `0 0 ${rhythm(3 / 4)} 0`,
-      fontWeight: 500,
-    },
-    h2: {
-      margin: `0 0 ${rhythm(2 / 3)} 0`,
-    },
-  }),
 });
 
-// Hot reload typography in development.
 if (process.env.NODE_ENV !== 'production') {
   typography.injectStyles();
 }

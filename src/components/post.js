@@ -99,5 +99,5 @@ const Thumbnail = styled(Img)`
   margin: 0 0 ${rhythm(1)} 0;
   border-radius: ${rhythm(1 / 4)};
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-  max-height: ${rhythm(10)};
+  max-height: ${rhythm(7)};
 `;
