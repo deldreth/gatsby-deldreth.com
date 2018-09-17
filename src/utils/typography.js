@@ -4,17 +4,18 @@ const typography = new Typography({
   bodyColor: '#D6DEEB',
   headerColor: '#82AAFF',
   headerFontFamily: ['Source Serif Pro', 'serif'],
-  bodyFontFamily: ['Source Serif Pro', 'serif'],
+  bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
   bodyWeight: 300,
   headerWeight: 500,
+  boldWeight: 600,
   googleFonts: [
     {
       name: 'Source Serif Pro',
       styles: ['500'],
     },
     {
-      name: 'Fira Sans',
-      styles: ['400', '400i'],
+      name: 'Source Sans Pro',
+      styles: ['300', '400', '400i', '600'],
     },
     {
       name: 'Fira Mono',

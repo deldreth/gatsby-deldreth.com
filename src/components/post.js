@@ -85,7 +85,7 @@ const Tags = styled('div')`
 
 const Tag = styled(Link)`
   font-size: ${rhythm(1 / 2)};
-  font-family: 'Fira Sans';
+  font-weight: 400;
   color: #011627;
   background-color: #ecc48d;
   border-radius: 100px;

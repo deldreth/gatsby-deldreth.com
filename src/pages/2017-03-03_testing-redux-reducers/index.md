@@ -1,18 +1,14 @@
 ---
-title: Texting redux reducers
+title: Testing redux reducers
 date: '2017-03-03T00:00:00.284Z'
 tags: ['react', 'redux', 'testing']
 ---
 
-A coworker asked me to write up an article detailing testing Redux Reducers.<!-- end -->
-
-Writing tests for reducers is pretty straight forward. The examples here are
-using <a href='https://github.com/avajs/ava'>ava</a>.
-
-I'm also using reduxsauce to quickly produce action types and creators, and an
+A coworker asked me to write up an article detailing testing Redux Reducers.<!-- end --> Writing tests for reducers is pretty straight forward. The examples here are
+using <a href='https://github.com/avajs/ava'>ava</a>. I'm also using reduxsauce to quickly produce action types and creators, and an
 immutability helper.
 
-# Error Reducer
+## Error Reducer
 
 From this reducer you can see that there are two action types we'll be wanting
 to test as well as the initial state of the reducer. The `ERROR_RECEIVE` type
@@ -44,7 +40,7 @@ export const HANDLERS = {
 export default createReducer(INITIAL_STATE, HANDLERS);
 ```
 
-# The Initial State Test
+## The Initial State Test
 
 We'll start by importing the necessary packages, etc.
 
@@ -64,7 +60,7 @@ test('initial state', t => {
 });
 ```
 
-# Testing the Action Creators
+## Testing the Action Creators
 
 Now we want to test our `ERROR_RECEIVE` action type. To do this we create a mock
 set of errors we want to pass to our action creator `.errorReceive`, and

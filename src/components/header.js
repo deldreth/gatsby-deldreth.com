@@ -2,13 +2,16 @@ import React from 'react';
 import styled, { css } from 'react-emotion';
 import { Link } from 'gatsby';
 
-import { rhythm } from '../utils/typography';
+import { rhythm, scale } from '../utils/typography';
 import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 export default function Header() {
   return (
     <Container>
-      <Link to="/">@deldreth</Link>
+      <H1>
+        <Link to="/">@deldreth</Link>
+      </H1>
+
       <Icons>
         <a href="https://github.com/deldreth" target="_blank">
           <FaGithub size={24} />
@@ -41,6 +44,11 @@ const Container = styled('div')`
   @media ${props => props.theme.media.sm} {
     justify-content: center;
   }
+`;
+
+const H1 = styled('h1')`
+  ${scale(1)} margin: 0;
+  color: #c792ea;
 `;
 
 const Icons = styled('div')`
