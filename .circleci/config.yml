@@ -1,0 +1,86 @@
+defaults: &defaults
+  working_directory: ~/deldreth
+
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8.10
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Install
+          command: yarn
+      # - run:
+      #     name: Test
+      #     command: yarn test
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  build:
+    docker:
+      - image: circleci/node:8.10
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Build
+          command: yarn build
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: ~/deldreth
+          paths: .
+
+  deploy:
+    docker:
+      - image: circleci/python:2.7-jessie
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run: sudo pip install awscli
+      - run:
+          name: Deploy
+          command: aws s3 sync public s3://www.deldreth.com/ --delete --acl public-read
+      - run: aws configure set preview.cloudfront true
+      - run:
+          name: Invalidate CDN
+          command: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"
+
+workflows:
+  version: 2
+  test-build-release:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
+      - build:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - test
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
