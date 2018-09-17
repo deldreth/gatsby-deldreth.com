@@ -1,4 +1,4 @@
-import Typography from 'typography';
+import Typography from 'typography'
 
 const typography = new Typography({
   // bodyColor: '#011627',
@@ -11,49 +11,33 @@ const typography = new Typography({
   googleFonts: [
     {
       name: 'Source Serif Pro',
-      styles: [
-        '400',
-        '400i',
-        '500',
-        '600'
-      ],
+      styles: ['400', '400i', '500', '600'],
     },
     {
       name: 'Fira Sans',
-      styles: [
-        '100',
-        '300',
-        '300i',
-        '400',
-        '400i',
-        '500',
-        '600',
-        '700'
-      ],
+      styles: ['100', '300', '300i', '400', '400i', '500', '600', '700'],
     },
     {
       name: 'Fira Mono',
-      styles: [
-        '400',
-      ],
+      styles: ['400'],
     },
   ],
   overrideStyles: ({ adjustFontSizeTo, rhythm }, options, styles) => ({
     'h1, h3': {
-      margin: `0 0 ${rhythm(3/4)} 0`,
+      margin: `0 0 ${rhythm(3 / 4)} 0`,
       fontWeight: 500,
     },
     h2: {
-      margin: `0 0 ${rhythm(2/3)} 0`,
-    }
-  })
-});
+      margin: `0 0 ${rhythm(2 / 3)} 0`,
+    },
+  }),
+})
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== 'production') {
-  typography.injectStyles();
+  typography.injectStyles()
 }
 
-export default typography;
-export const rhythm = typography.rhythm;
-export const scale = typography.scale;
+export default typography
+export const rhythm = typography.rhythm
+export const scale = typography.scale

@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import kebabCase from 'lodash/kebabCase';
+import kebabCase from 'lodash/kebabCase'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
-import { ThemeProvider } from 'emotion-theming';
-import styled from 'react-emotion';
+import { ThemeProvider } from 'emotion-theming'
+import styled from 'react-emotion'
 
-import Layout, { Grid } from '../components/layouts';
-import theme from '../utils/theme';
-import Post from '../components/post';
+import Layout, { Grid } from '../components/layouts'
+import theme from '../utils/theme'
+import Post from '../components/post'
 
 class BlogIndex extends React.Component {
   render() {
@@ -30,7 +30,7 @@ class BlogIndex extends React.Component {
 
           <Grid>
             {posts.map(({ node }) => {
-              return <Post key={node.fields.slug} post={node}/>;
+              return <Post key={node.fields.slug} post={node} />
             })}
           </Grid>
         </Layout>
@@ -39,7 +39,7 @@ class BlogIndex extends React.Component {
   }
 }
 
-export default BlogIndex;
+export default BlogIndex
 
 export const pageQuery = graphql`
   query {
@@ -58,10 +58,10 @@ export const pageQuery = graphql`
           }
           frontmatter {
             date(formatString: "MMMM D YYYY")
-            title,
+            title
             tags
             thumbnail {
-              childImageSharp{
+              childImageSharp {
                 sizes(maxWidth: 630) {
                   ...GatsbyImageSharpSizes
                 }
@@ -72,4 +72,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
