@@ -2,6 +2,7 @@
 title: Cluster computing with a raspberry pi bramble
 date: "2016-03-10T00:00:00.284Z"
 tags: ["project", "rpi", "cluster computing"]
+thumbnail: "./berries.jpg"
 ---
 My goal here was to simply create a cluster of raspberry pi 3s (colloquially
 referred to as a bramble).<!-- end -->Why? It seems like a pretty cheap way to build a

@@ -2,11 +2,12 @@
 title: Redux primer
 date: "2017-02-26T00:00:00.284Z"
 tags: ["redux"]
+thumbnail: "./Redux_logo.png"
 ---
 A basic, barebones tutorial for Redux<!-- end -->
 
 <a name='toc'></a>
-# Table of Contents
+## Table of Contents
 1. [History: Flux and Redux](#history)
 2. [Terms](#terms)
 2. [The Three Principles](#three)
@@ -27,7 +28,7 @@ I've been working with React and subsequently Redux for nearly two years. On occ
 
 Redux isn't out to get you. Sit back. Deep breath. Here we go.
 
-# History: Flux and Redux <a name="history"></a>
+## History: Flux and Redux <a name="history"></a>
 To get where you're going it's important to know where you've been. Enter Flux. React at a very high level has always been a library for writing user interfaces. It never provided any strong data separation. Each component had state and various things modified that state. Communication between components largely boiled down to passing props down to children. Flux provides a unidirectional data flow: actions sent through a dispatcher which routed to a store and a change event would eventually be fired so components could rerender. Flux showed that React applications could have a separation of concerns. The store could reduce state and the view layer needed only rerender from the current state.
 
 **The basis of this data flow remain in Redux.**
@@ -45,7 +46,7 @@ If you want to know more about the history and motivation behind redux then I su
 
 
 <a name="terms"></a>
-# Terms
+## Terms
 
 **Action**: Strings that represent the name of an action. Usually defined as a constant. I refer to these as types.
 ```javascript
@@ -90,7 +91,7 @@ const hasApplesReducer = ( state = PREVIOUS_STATE, action: Object ) => {
 
 
 <a name="three"></a>
-# The Three Principles
+## The Three Principles
 
 ### 1. Single Source of Truth
 This principle is actually quite simple: The entire state of your application should be represented as a single object within a single store.
@@ -112,7 +113,7 @@ Pure functions. For a function to be pure the following statements must hold:
 
 
 <a name="data-flow"></a>
-# Data Flow
+## Data Flow
 
 Data flow in Redux is unidirectional. The attached diagram shows the flow of data relative to a 'View' or some 'Side Effect'. All actions pass through the store and the store provides state. Take note that unlike Flux, Redux does not use the concept of a Dispatcher, but the store does provide a dispatch function. This diagram abstracts this out as the entry point of the store.
 
@@ -137,7 +138,7 @@ _The same abstraction applies to **Side Effects**._
 
 
 <a name="actions"></a>
-# Action Types and Creators
+## Action Types and Creators
 
 ### Types
 Types are a value, usually a string, defined as a constant. They're analogous to a event name. In organizing my react redux applications I tend to prefer prefixing types with some label that indicates their relationship with the rest of redux: `APP_`, `TRACK_`, etc.
@@ -177,7 +178,7 @@ Action creators need not be any more complicated than this. They're simply funct
 
 
 <a name="store"></a>
-# The Store
+## The Store
 The Redux Store is the workhorse of redux. Everything that is Redux passes through the store. In turn the store exposes the state and dispatch of Redux. Stores can get pretty complicated as they're extended through middleware. Often store creation is wrapped within a function.
 
 This is the most basic of stores:
@@ -223,7 +224,7 @@ Also, I prefer returning my store as a function. This isn't a requirement. You a
 
 
 <a name="middleware"></a>
-# Middleware
+## Middleware
 Our store is ready to party. Though, say we want to log actions as they move through the store. The best way to do this is through the store's middleware. Remember that state is immutable. Middleware must respect this princple. However, they can expose all sorts of functionality to the store. Logging is simple enough to outline the basis and if you've got any experience with Express' middleware api then this should sit well with you.
 
 The basic structure of a middleware:
@@ -257,7 +258,7 @@ const middleware = (store: Object) =>
 
 
 <a name="immutability"></a>
-# Immutability
+## Immutability
 
 I don't intend to go too deep into immutability since other parts of this primer really attempt to enforce the idea that the state of Redux cannot be changed except through reducers returning new state. I do, however, want to provide a brief list of really useful immutability helpers.
 
@@ -276,7 +277,7 @@ I've also used [seamless-immutable](https://github.com/rtfeldman/seamless-immuta
 
 
 <a name="reducers"></a>
-# Reducers
+## Reducers
 
 Principle 3 requires that pure functions be used to modify state. As discussed above we avoid side effects by ensuring that our reducers are pure. If reducers were impure it could become difficult to rely on the state tree for consistency. Much like the difficulty of determing application behavior in languages that use **globals**. Maintaining pure functions for reducers does not mean that they must be simple functions.
 
@@ -354,7 +355,7 @@ Reducers can get fairly complicated. It's important to keep in mind that they mu
 
 
 <a name="selectors"></a>
-# Selectors
+## Selectors
 
 Another useful thing to do with Redux is to create functions that are referred to as selectors. They allow us to **compute derived state** which is a complex way to say that they allow us to make logic based off the entire state of the app. Selectors are commonly used in the `mapStateToProps()` function, but they are defined often defined alongside reducers.
 
@@ -414,7 +415,7 @@ In this situation the fields prop will be an array that contains a single object
 
 
 <a name="side-effects"></a>
-# Side Effects
+## Side Effects
 
 When we dispatch actions we have the expectation that something immediate will happen. The state will be updated in some way and the View layer will re-render the changes. Nothing is always that simple. Sometimes our actions might cause other things to happen within the application. These could be making requests to an API or sequencing a series of dispatched actions. Whatever these might be we refer to them as **side effects**, and they happen asynchronous through middleware.
 
