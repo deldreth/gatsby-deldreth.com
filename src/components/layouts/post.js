@@ -7,11 +7,13 @@ import Header from '../header';
 export default function Post (props) {
   return (
     <Fragment>
+      <Header/>
+
       <Container>
         {props.children}
       </Container>
     </Fragment>
-  );
+  )
 }
 
 const Container = styled('div')`

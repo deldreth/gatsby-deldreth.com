@@ -1,12 +1,13 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
+import { Link } from 'gatsby';
 
 import { rhythm } from '../utils/typography';
 
 export default function Header () {
   return (
     <Container>
-      @deldreth
+      <Link to='/'>@deldreth</Link>
     </Container>
   );
 }
@@ -18,7 +19,7 @@ const Container = styled('div')`
   margin-left: auto;
   margin-right: auto;
   background-color: #01121F;
-  color: #82AAFF;
+  color: #C792EA;
   font-size: ${rhythm(1.5)};
   padding: ${rhythm(1)};
   border-bottom: 1px solid #122D42;

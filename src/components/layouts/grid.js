@@ -1,20 +1,6 @@
-import React, { Fragment } from 'react';
-
 import styled from 'react-emotion';
-import { rhythm, scale } from '../../utils/typography';
-import Header from '../header';
 
-export default function Base (props) {
-  return (
-    <Fragment>
-      <Header/>
-
-      {props.children}
-    </Fragment>
-  );
-}
-
-export const Grid = styled('div')`
+export default styled('div')`
   display: grid;
   grid-gap: 72px 2%;
 
