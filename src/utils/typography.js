@@ -1,4 +1,4 @@
-import Typography from 'typography'
+import Typography from 'typography';
 
 const typography = new Typography({
   // bodyColor: '#011627',
@@ -31,13 +31,13 @@ const typography = new Typography({
       margin: `0 0 ${rhythm(2 / 3)} 0`,
     },
   }),
-})
+});
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== 'production') {
-  typography.injectStyles()
+  typography.injectStyles();
 }
 
-export default typography
-export const rhythm = typography.rhythm
-export const scale = typography.scale
+export default typography;
+export const rhythm = typography.rhythm;
+export const scale = typography.scale;

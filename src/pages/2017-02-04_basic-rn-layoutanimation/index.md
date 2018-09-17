@@ -1,9 +1,10 @@
 ---
 title: Animations in React Native with layoutAnimation
-date: "2017-04-02T00:00:00.284Z"
-tags: ["react native", "animation"]
+date: '2017-04-02T00:00:00.284Z'
+tags: ['react native', 'animation']
 ---
-Using LayoutAnimation to perform css transition like animations. 
+
+Using LayoutAnimation to perform css transition like animations.
 I've been working with React Native since early 2016.<!-- end -->The majority of the Apps
 that I've published have been fairly straightforward in their UI and
 presentation. Recently, I was tasked with doing some basic animations when
@@ -53,22 +54,22 @@ import {
   Text,
   View,
   TouchableOpacity,
-  LayoutAnimation
+  LayoutAnimation,
 } from 'react-native';
 
 export default class layoutanimation extends Component {
-  constructor ( props ) {
-    super( props );
+  constructor(props) {
+    super(props);
 
     this.state = {
       next: 'left',
-      left: 0
+      left: 0,
     };
   }
 
-  onPress () {
+  onPress() {
     LayoutAnimation.easeInEaseOut();
-    if ( this.state.next === 'left' ) {
+    if (this.state.next === 'left') {
       this.setState({ left: this.state.left - 50, next: 'right' });
     } else {
       this.setState({ left: this.state.left + 50, next: 'left' });
@@ -77,10 +78,11 @@ export default class layoutanimation extends Component {
 
   render() {
     return (
-      <View style={ styles.container }>
+      <View style={styles.container}>
         <TouchableOpacity
-          style={ { left: this.state.left } }
-          onPress={ () => this.onPress() }>
+          style={{ left: this.state.left }}
+          onPress={() => this.onPress()}
+        >
           <Text>LayoutAnimation</Text>
         </TouchableOpacity>
       </View>
@@ -88,13 +90,13 @@ export default class layoutanimation extends Component {
   }
 }
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
-} );
+    alignItems: 'center',
+  },
+});
 
 AppRegistry.registerComponent('layoutanimation', () => layoutanimation);
 ```

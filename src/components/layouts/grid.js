@@ -1,13 +1,15 @@
 import styled from 'react-emotion';
 
+import { rhythm } from '../../utils/typography';
+
 export default styled('div')`
   display: grid;
-  grid-gap: 72px 2%;
+  grid-gap: ${rhythm(2)} 2%;
 
   margin-left: auto;
   margin-right: auto;
   max-width: 1200px;
-  padding: 48px 16px 16px 16px;
+  padding: ${rhythm(3)} ${rhythm(1)};
 
   @media ${props => props.theme.media.sm} {
     grid-template-columns: repeat(2, 48%);

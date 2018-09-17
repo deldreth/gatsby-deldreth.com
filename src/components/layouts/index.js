@@ -4,10 +4,10 @@ import styled from 'react-emotion';
 import { rhythm, scale } from '../../utils/typography';
 import Header from '../header';
 
-export default function Base (props) {
+export default function Base(props) {
   return (
     <Fragment>
-      <Header/>
+      <Header />
 
       {props.children}
     </Fragment>

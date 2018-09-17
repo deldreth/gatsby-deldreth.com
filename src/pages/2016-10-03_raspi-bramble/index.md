@@ -1,26 +1,26 @@
 ---
 title: Cluster computing with a raspberry pi bramble
-date: "2016-03-10T00:00:00.284Z"
-tags: ["project", "rpi", "cluster computing"]
-thumbnail: "./berries.jpg"
+date: '2016-03-10T00:00:00.284Z'
+tags: ['project', 'rpi', 'cluster computing']
+thumbnail: './berries.jpg'
 ---
+
 My goal here was to simply create a cluster of raspberry pi 3s (colloquially
 referred to as a bramble).<!-- end -->Why? It seems like a pretty cheap way to build a
 test bed for deploying to distributed systems (such as AWS). Overall this
 setup cost around $240 but could be made much cheaper by using Raspberry Pi
 Zeros and using USB OTG.
 
-
 ## Pretty straight forward equipment list:
 
 ![](https://lh3.googleusercontent.com/53Ch0rh3mhOL_vWvQ0sdLF-mxV551iJ1LNNBvDmSvOGfSm0mCIUujNVCAj9Vs-oWULKMXBf0LDGzAPQ6rtdbXGFiWT1RZ8yT3JzKkXK9xnI7B8zZeAC9alD2lDIYuC5tYnFfUDfapnJqXK77aoOR6_Xh47mPJxM-amqSPSBbJh6LwtmK11MiDx90Fsl_8e4w8z9KNpNRVc1U1q7_tKpcjpxliAUzO4LtEkroyh-L38sarccpYvrRMtik8jXFC3d0EJLFCNbQwdKB0-XIo0aPdLqv2yHXdVbbtiZCXQPc_4KH9wmsqcq2fmX4tmbfve80_tcrKYHRWL5BJmJlZJ5yA9mct_Eb2GOnlGuk57DqSi1Z1redJSyeo1J8gIL6qKi3jESeXkuaTzY_Og62Ybkvc8DELGbmscxoyaa4z708ghJX-DTHB_y30vKGHQ3yQc6ojvZjprQ0LoakwZ1JvWnafs3iZfdQm2bXKk68J-vHs24mVjIDRWDMLBU0K9pcYBTvsaob1fM8r54M4HGDahrAsZBdF0UXHtMUN3JLklKyzBNspWAmwZfK5d7a8dApzJTEdXToJkgz=s847-w634-h847-no)
 
-* 4x Raspberry Pi 3
-* 5 Port Switch
-* 4x 16 GB Micro SD Cards
-* 4x USB cables
-* 4x Patch Cables
-* And one neat stackable case to house them all
+- 4x Raspberry Pi 3
+- 5 Port Switch
+- 4x 16 GB Micro SD Cards
+- 4x USB cables
+- 4x Patch Cables
+- And one neat stackable case to house them all
 
 The result:
 
@@ -32,7 +32,6 @@ Initially I went with HypriotOS 1.0.1. Partially because of the awesome work
 they've done into getting Docker (specifically 1.12) to run well on this
 Raspbian derivitive. My understanding now is that Raspbian has good support
 for Docker 1.12 out of the box (with a kernel update).
-
 
 ## First Steps To a Distributed Task Queue
 
@@ -52,7 +51,6 @@ celery task broker using rabbitmq.
 I'll have further updates on this project shortly. Right now I've been playing
 around with running Apache Spark on a single master:three slave setup with the
 cluster, but I want to continue working on the distributed task queue.
-
 
 ## Further Comments
 

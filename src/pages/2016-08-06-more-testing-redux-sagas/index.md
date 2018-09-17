@@ -1,10 +1,11 @@
 ---
 title: Testing redux sagas, round two
-date: "2016-08-06T00:00:00.284Z"
-tags: ["react", "testing", "redux"]
+date: '2016-08-06T00:00:00.284Z'
+tags: ['react', 'testing', 'redux']
 ---
 
-Going further in depth on patterns for testing sagas. 
+Going further in depth on patterns for testing sagas.
+
 <!-- end -->
 
 Previously I discussed the possibilities surrounding unit tests for generators using redux-saga.
@@ -33,7 +34,7 @@ For this example I've created two sagas. One intended to yield to take on some L
 The watchLogin saga, much like my previous example, yields to take for a username and password and then does some basic "I'm doing this" sort of actions, calls an API function, handles the response. If the response is good it will fork another saga.
 
 ```javascript
-export function * watchLogin () {
+export function* watchLogin() {
   while (true) {
     const { username, password } = yield take(Types.LOGIN);
 
@@ -57,7 +58,7 @@ export function * watchLogin () {
 The fetchUser saga isn't what's colloquially referred to as a watching saga. It doesn't yield to take. It expects that the state is to the point that it has everything it needs to make another API call. If auth wasn't set in the state this saga would fail as it yields to select to get the state. If you're not familiar with the concept of selectors I suggest looking at the reactjs/reselect project. Selectors have become the defacto method for getting state in the redux world. In this case the getState selector is actually returning the entire state of the application. Of course, selectors can be made to be very precise in what pieces of state they return.
 
 ```javascript
-export function * fetchUser () {
+export function* fetchUser() {
   const { auth } = yield select(getState);
 
   yield put(Actions.startActivity());
@@ -79,15 +80,9 @@ export function * fetchUser () {
 We've seen how state must be injected on the test end after the yield to a take or call has occurred. Yields to select effects are no different. The following is an excerpt from the entire test of the watchLogin saga.
 
 ```javascript
-t.deepEqual(
-  userStep(),
-  select(getState)
-);
+t.deepEqual(userStep(), select(getState));
 
-t.deepEqual(
-  userStep(getState()),
-  put(Actions.startActivity())
-);
+t.deepEqual(userStep(getState()), put(Actions.startActivity()));
 ```
 
 The userStep saga's first yield is a select. The getState() function is just a selector that returns some mock state. Again, this is the same as state injection for other saga effects.
@@ -100,10 +95,7 @@ Testing for yields to fork effects are much like any other tests. We know that a
 import test from 'ava';
 import { take, select, put, call, fork } from 'redux-saga/effects';
 
-import {
-  watchLogin,
-  fetchUser
-} from '../../src/sagas';
+import { watchLogin, fetchUser } from '../../src/sagas';
 import Actions from '../../src/actions/creators';
 import Types from '../../src/actions/types';
 
@@ -111,97 +103,58 @@ import Api from '../../src/services/fixtureApi';
 
 import { getState } from '../../src/reducers/selectors';
 
-const stepper = (fn) => (mock) => fn.next(mock).value;
+const stepper = fn => mock => fn.next(mock).value;
 
 test('the watch login saga', t => {
   const step = stepper(watchLogin());
   const mock = {
     username: 'test',
-    password: 'test_pass'
+    password: 'test_pass',
   };
 
   const mockResponse = {
     ok: true,
     data: {
-      auth_token: '1234'
-    }
+      auth_token: '1234',
+    },
   };
 
-  t.deepEqual(
-    step(),
-    take(Types.LOGIN)
-  );
+  t.deepEqual(step(), take(Types.LOGIN));
 
-  t.deepEqual(
-    step(mock),
-    put(Actions.startActivity())
-  );
+  t.deepEqual(step(mock), put(Actions.startActivity()));
 
-  t.deepEqual(
-    step(),
-    call(Api.login, mock.username, mock.password)
-  );
+  t.deepEqual(step(), call(Api.login, mock.username, mock.password));
 
-  t.deepEqual(
-    step(mockResponse),
-    put(Actions.endActivity())
-  );
+  t.deepEqual(step(mockResponse), put(Actions.endActivity()));
 
-  t.deepEqual(
-    step(),
-    put(Actions.loginSuccess(mockResponse.data))
-  );
+  t.deepEqual(step(), put(Actions.loginSuccess(mockResponse.data)));
 
-  t.deepEqual(
-    step(),
-    fork(fetchUser)
-  );
+  t.deepEqual(step(), fork(fetchUser));
 
   const userStep = stepper(fetchUser());
   const mockGetUserReponse = {
     ok: true,
     data: {
       name: 'Rick Deckard',
-      address: 'Earth'
-    }
+      address: 'Earth',
+    },
   };
 
-  t.deepEqual(
-    userStep(),
-    select(getState)
-  );
+  t.deepEqual(userStep(), select(getState));
 
-  t.deepEqual(
-    userStep(getState()),
-    put(Actions.startActivity())
-  );
+  t.deepEqual(userStep(getState()), put(Actions.startActivity()));
 
-  t.deepEqual(
-    userStep(),
-    call(Api.getUser, getState().auth.auth_token)
-  );
+  t.deepEqual(userStep(), call(Api.getUser, getState().auth.auth_token));
 
-  t.deepEqual(
-    userStep(mockGetUserReponse),
-    put(Actions.endActivity())
-  );
+  t.deepEqual(userStep(mockGetUserReponse), put(Actions.endActivity()));
 
-  t.deepEqual(
-    userStep(),
-    put(Actions.receiveUser(mockGetUserReponse.data))
-  );
+  t.deepEqual(userStep(), put(Actions.receiveUser(mockGetUserReponse.data)));
 
   // The watchFetchUser saga does not iterate
-  t.is(
-    userStep(),
-    undefined
-  );
+  t.is(userStep(), undefined);
 
   // For good measure, lets see if the prefork watchLogin saga is where we expect
-  t.deepEqual(
-    step(),
-    take(Types.LOGIN)
-  );
+  t.deepEqual(step(), take(Types.LOGIN));
 });
 ```
 

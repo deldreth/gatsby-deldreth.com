@@ -1,23 +1,23 @@
-import React from 'react'
-import Helmet from 'react-helmet'
-import { Link, graphql } from 'gatsby'
-import get from 'lodash/get'
-import { ThemeProvider } from 'emotion-theming'
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import { css } from 'react-emotion'
+import React from 'react';
+import Helmet from 'react-helmet';
+import { Link, graphql } from 'gatsby';
+import get from 'lodash/get';
+import { ThemeProvider } from 'emotion-theming';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { css } from 'react-emotion';
 
-import '../prism-nightowl.css'
+import '../prism-nightowl.css';
 
-import Layout from '../components/layouts/post'
-import { rhythm, scale } from '../utils/typography'
-import theme from '../utils/theme'
-import styled from 'react-emotion'
+import Layout from '../components/layouts/post';
+import { rhythm, scale } from '../utils/typography';
+import theme from '../utils/theme';
+import styled from 'react-emotion';
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
-    const siteTitle = get(this.props, 'data.site.siteMetadata.title')
-    const siteDescription = post.excerpt
+    const post = this.props.data.markdownRemark;
+    const siteTitle = get(this.props, 'data.site.siteMetadata.title');
+    const siteDescription = post.excerpt;
 
     return (
       <ThemeProvider theme={theme}>
@@ -35,12 +35,12 @@ class BlogPostTemplate extends React.Component {
           <Pagination pageContext={this.props.pageContext} />
         </Layout>
       </ThemeProvider>
-    )
+    );
   }
 }
 
 function Pagination(props) {
-  const { previous, next } = props.pageContext
+  const { previous, next } = props.pageContext;
 
   return (
     <div
@@ -61,10 +61,10 @@ function Pagination(props) {
         </StyledLink>
       )}
     </div>
-  )
+  );
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -84,13 +84,13 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 
 const Date = styled('div')`
   color: #68d7c3;
   ${scale(-1 / 9)};
   margin: 0 0 ${rhythm(1 / 4)};
-`
+`;
 
 const StyledLink = styled(Link)`
   color: #011627;
@@ -99,4 +99,4 @@ const StyledLink = styled(Link)`
   background-color: #5e7d96;
   border-radius: 100px;
   padding: 4px 16px;
-`
+`;

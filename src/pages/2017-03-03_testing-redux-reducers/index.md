@@ -1,8 +1,9 @@
 ---
 title: Texting redux reducers
-date: "2017-03-03T00:00:00.284Z"
-tags: ["react", "redux", "testing"]
+date: '2017-03-03T00:00:00.284Z'
+tags: ['react', 'redux', 'testing']
 ---
+
 A coworker asked me to write up an article detailing testing Redux Reducers.<!-- end -->
 
 Writing tests for reducers is pretty straight forward. The examples here are
@@ -12,6 +13,7 @@ I'm also using reduxsauce to quickly produce action types and creators, and an
 immutability helper.
 
 # Error Reducer
+
 From this reducer you can see that there are two action types we'll be wanting
 to test as well as the initial state of the reducer. The `ERROR_RECEIVE` type
 has a creator that will dispatch the action with an expected array of strings
@@ -25,25 +27,27 @@ import { createReducer } from 'reduxsauce';
 import { Types } from 'src/actions';
 
 export const INITIAL_STATE = {
-  errors: []
+  errors: [],
 };
 
 export const HANDLERS = {
-  [ Types.ERROR_RECEIVE ]: ( state = INITIAL_STATE, action ) =>
-    update( state, {
-      $merge: { errors: action.errors }
-    } ),
-  [ Types.ERROR_CLEAR ]: ( state = INITIAL_STATE, action ) =>
-    update( state, {
-      $merge: { errors: [] }
-    } ),
+  [Types.ERROR_RECEIVE]: (state = INITIAL_STATE, action) =>
+    update(state, {
+      $merge: { errors: action.errors },
+    }),
+  [Types.ERROR_CLEAR]: (state = INITIAL_STATE, action) =>
+    update(state, {
+      $merge: { errors: [] },
+    }),
 };
 
-export default createReducer( INITIAL_STATE, HANDLERS );
+export default createReducer(INITIAL_STATE, HANDLERS);
 ```
 
 # The Initial State Test
+
 We'll start by importing the necessary packages, etc.
+
 ```javascript
 import test from 'ava';
 
@@ -56,14 +60,12 @@ and pass it through the imported reducer.
 
 ```javascript
 test('initial state', t => {
-  t.deepEqual(
-    INITIAL_STATE,
-    reducer( INITIAL_STATE, {} )
-  )
-} );
+  t.deepEqual(INITIAL_STATE, reducer(INITIAL_STATE, {}));
+});
 ```
 
 # Testing the Action Creators
+
 Now we want to test our `ERROR_RECEIVE` action type. To do this we create a mock
 set of errors we want to pass to our action creator `.errorReceive`, and
 specifically call that creator as the action to the reducer. Here we're actually
@@ -73,35 +75,27 @@ We deep equal check that the state matches the object we're expecting.
 
 ```javascript
 test('dispatch ERROR_RECEIVE', t => {
-  let state = reducer( INITIAL_STATE, {} );
+  let state = reducer(INITIAL_STATE, {});
 
-  const errors = [
-    'Woah There!'
-  ];
-  state = reducer( state, Creators.errorReceive( errors ) );
+  const errors = ['Woah There!'];
+  state = reducer(state, Creators.errorReceive(errors));
 
-  t.deepEqual(
-    state,
-    {
-      errors: errors
-    }
-  );
-} );
+  t.deepEqual(state, {
+    errors: errors,
+  });
+});
 ```
 
 The same is true for testing `ERROR_CLEAR`.
 
 ```javascript
 test('dispatch ERROR_CLEAR', t => {
-  let state = reducer( INITIAL_STATE, {} );
+  let state = reducer(INITIAL_STATE, {});
 
-  state = reducer( state, Creators.errorClear() );
+  state = reducer(state, Creators.errorClear());
 
-  t.deepEqual(
-    state,
-    {
-      errors: []
-    }
-  );
-} );
+  t.deepEqual(state, {
+    errors: [],
+  });
+});
 ```
