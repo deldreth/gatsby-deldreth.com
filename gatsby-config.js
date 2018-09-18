@@ -54,9 +54,9 @@ module.exports = {
         short_name: `deldreth`,
         start_url: `/`,
         background_color: `#ffffff`,
-        theme_color: `#663399`,
+        theme_color: `#c792ea`,
         display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
+        icon: `src/assets/walter.png`,
       },
     },
     `gatsby-plugin-offline`,
@@ -69,4 +69,4 @@ module.exports = {
     },
     `gatsby-plugin-emotion`,
   ],
-}
+};
