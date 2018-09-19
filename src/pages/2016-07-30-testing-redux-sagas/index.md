@@ -3,6 +3,7 @@ title: Testing redux sagas
 date: '2016-07-30T00:00:00.284Z'
 tags: ['react', 'testing', 'redux']
 thumbnail: './Redux-Saga-Logo.png'
+thumbnailBg: '#d8f1d0'
 ---
 
 I've been debating what I should tackle as my first article. I've never been the best at writing technical articles or how-to guides, but it is something I've always wanted to put to my hands.

@@ -3,6 +3,7 @@ title: Redux primer
 date: '2017-02-26T00:00:00.284Z'
 tags: ['redux']
 thumbnail: './Redux_logo.png'
+thumbnailBg: '#d2c4e9'
 ---
 
 A basic, barebones tutorial for Redux<!-- end -->

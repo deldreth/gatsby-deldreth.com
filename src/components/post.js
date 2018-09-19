@@ -15,6 +15,7 @@ export default function Post(props) {
     >
       {props.post.frontmatter.thumbnail && (
         <Thumbnail
+          backgroundColor={props.post.frontmatter.thumbnailBg}
           sizes={props.post.frontmatter.thumbnail.childImageSharp.sizes}
         />
       )}
@@ -94,7 +95,8 @@ const Tag = styled(Link)`
 `;
 
 const Thumbnail = styled(Img)`
-  background-color: #d6deeb;
+  background-color: ${props =>
+    props.backgroundColor ? props.backgroundColor : '#d6deeb'};
   margin: 0 0 ${rhythm(1)} 0;
   border-radius: ${rhythm(1 / 4)};
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);

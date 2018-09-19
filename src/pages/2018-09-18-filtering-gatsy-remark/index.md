@@ -2,6 +2,8 @@
 title: Filtering Gatsby blog results
 date: '2018-09-19T00:00:00.284Z'
 tags: ['graphql', 'gatsby', 'react']
+thumbnail: './gatsby.png'
+thumbnailBg: '#FFF6FF'
 ---
 
 Gatsby ships and uses an incredibly powerful transformer built on top of remark to allow one to filter results based on front matter and other parts of parsed markdown.

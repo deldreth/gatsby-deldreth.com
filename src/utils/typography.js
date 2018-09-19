@@ -22,6 +22,14 @@ const typography = new Typography({
       styles: ['400'],
     },
   ],
+  overrideStyles: ({ rhythm }, options, styles) => ({
+    'pre[class*="language-"]': {
+      marginBottom: rhythm(1),
+    },
+    ':not(pre) > code[class*="language-"], pre[class*="language-"]': {
+      padding: rhythm(0.5),
+    },
+  }),
 });
 
 if (process.env.NODE_ENV !== 'production') {
