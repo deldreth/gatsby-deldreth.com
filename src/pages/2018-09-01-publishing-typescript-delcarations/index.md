@@ -2,7 +2,7 @@
 title: Publish TypeScript module delcarations with rollup
 date: '2018-09-09T00:00:00.284Z'
 tags: ['typescript', 'npm', 'rollup']
-published: true
+published: false
 ---
 
 It seems there's some tightly guarded industry secrets around publishing TypeScript module declarations effectively. Let's break it down.
