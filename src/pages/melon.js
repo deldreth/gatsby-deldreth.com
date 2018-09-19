@@ -26,10 +26,10 @@ export default function Melon(props) {
           penchant for watermelon iconography (and sometimes the fruiting bodies
           of citrullus lanatus). I've been developing software and web
           applications for {new Date().getFullYear() - 2004} years. As a result
-          I've worked on a lot of different things over the years, but my focus
-          has always been web development (currently React, even). If you're
-          super interested in my work then I suggest checking out some of my
-          more interesting open source projects.
+          I've worked on a lot of different projects, but my focus has always
+          been web development (currently React, even). If you're super
+          interested in my work then I suggest checking out some of my open
+          source projects.
         </p>
         <h2>Current position</h2>
         Senior Full Stack Developer at{' '}
@@ -38,13 +38,16 @@ export default function Melon(props) {
         </a>
         , where I lead the engineering processes. Moving the company forward.
         {/* <h3>The Sacred Doorway</h3> */}
+        <div style={{ textAlign: 'center' }}>
+          <img src={require('../assets/walter.png')} height={128} />
+        </div>
       </Layout>
     </ThemeProvider>
   );
 }
 
 const Img = styled('img')`
-  margin: 0 ${rhythm(1)} 0 0;
+  margin: 0 ${rhythm(1 / 2)} 0 0;
   border-radius: ${rhythm(1)};
   float: left;
 `;
