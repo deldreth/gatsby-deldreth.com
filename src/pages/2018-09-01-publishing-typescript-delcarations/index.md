@@ -81,4 +81,4 @@ import Module1 from './Module1';
 const foo = new Module1();
 ```
 
-Simple, but we've outlined enough to setup our modules.
+Simple, but we've outlined enough to setup our modules. If we run the typescript compiler on this project with the above

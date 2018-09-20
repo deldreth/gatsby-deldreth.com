@@ -1,35 +1,30 @@
 import React, { Fragment } from 'react';
 import { Link, graphql } from 'gatsby';
-import { ThemeProvider } from 'emotion-theming';
 import styled from 'react-emotion';
 import Header from '../components/header';
 
 import Grid from '../components/layouts/grid';
 import { rhythm } from '../utils/typography';
-import theme from '../utils/theme';
 import Post from '../components/post';
 
 const Tags = ({ pageContext, data }) => {
-  const { tag } = pageContext;
   const { edges, totalCount } = data.allMarkdownRemark;
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? '' : 's'
-  } tagged with "${tag}"`;
+  } tagged with "${pageContext.tag}"`;
 
   return (
-    <ThemeProvider theme={theme}>
-      <Fragment>
-        <Header />
+    <Fragment>
+      <Header />
 
-        <TagHeader>{tagHeader}</TagHeader>
+      <TagHeader>{tagHeader}</TagHeader>
 
-        <Grid>
-          {edges.map(({ node }) => {
-            return <Post key={node.fields.slug} post={node} />;
-          })}
-        </Grid>
-      </Fragment>
-    </ThemeProvider>
+      <Grid>
+        {edges.map(({ node }) => {
+          return <Post key={node.fields.slug} post={node} />;
+        })}
+      </Grid>
+    </Fragment>
   );
 };
 

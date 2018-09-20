@@ -1,8 +1,10 @@
 import Typography from 'typography';
 
+import theme from './theme';
+
 const typography = new Typography({
-  bodyColor: '#D6DEEB',
-  headerColor: '#82AAFF',
+  bodyColor: theme.color.lightgray,
+  headerColor: theme.color.blue,
   headerFontFamily: ['Source Serif Pro', 'serif'],
   bodyFontFamily: ['Source Sans Pro', 'sans-serif'],
   bodyWeight: 300,

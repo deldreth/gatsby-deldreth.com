@@ -2,15 +2,13 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import get from 'lodash/get';
-import { ThemeProvider } from 'emotion-theming';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { css } from 'react-emotion';
 
 import '../prism-nightowl.css';
 
-import Layout from '../components/layouts/post';
+import LayoutPost from '../components/layouts/post';
 import { rhythm, scale } from '../utils/typography';
-import theme from '../utils/theme';
 import styled from 'react-emotion';
 
 class BlogPostTemplate extends React.Component {
@@ -20,21 +18,19 @@ class BlogPostTemplate extends React.Component {
     const siteDescription = post.excerpt;
 
     return (
-      <ThemeProvider theme={theme}>
-        <Layout location={this.props.location}>
-          <Helmet
-            htmlAttributes={{ lang: 'en' }}
-            meta={[{ name: 'description', content: siteDescription }]}
-            title={`${post.frontmatter.title} | ${siteTitle}`}
-          />
-          <h1>{post.frontmatter.title}</h1>
-          <Date>{post.frontmatter.date}</Date>
+      <LayoutPost>
+        <Helmet
+          htmlAttributes={{ lang: 'en' }}
+          meta={[{ name: 'description', content: siteDescription }]}
+          title={`${post.frontmatter.title} | ${siteTitle}`}
+        />
+        <h1>{post.frontmatter.title}</h1>
+        <Date>{post.frontmatter.date}</Date>
 
-          <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
 
-          <Pagination pageContext={this.props.pageContext} />
-        </Layout>
-      </ThemeProvider>
+        <Pagination pageContext={this.props.pageContext} />
+      </LayoutPost>
     );
   }
 }

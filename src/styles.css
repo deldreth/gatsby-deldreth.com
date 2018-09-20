@@ -6,9 +6,21 @@ body {
   background-color: #D6DEEB;
 } */
 
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a {
+  color: #82aaff;
+}
+
 a {
-  color: inherit;
+  color: #addb67;
   text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 @font-face {

@@ -4,7 +4,6 @@ import kebabCase from 'lodash/kebabCase';
 import { graphql } from 'gatsby';
 import get from 'lodash/get';
 import Helmet from 'react-helmet';
-import { ThemeProvider } from 'emotion-theming';
 import styled from 'react-emotion';
 
 import Layout from '../components/layouts';
@@ -22,21 +21,19 @@ class BlogIndex extends React.Component {
     const posts = get(this, 'props.data.allMarkdownRemark.edges');
 
     return (
-      <ThemeProvider theme={theme}>
-        <Layout location={this.props.location}>
-          <Helmet
-            htmlAttributes={{ lang: 'en' }}
-            meta={[{ name: 'description', content: siteDescription }]}
-            title={siteTitle}
-          />
+      <Layout location={this.props.location}>
+        <Helmet
+          htmlAttributes={{ lang: 'en' }}
+          meta={[{ name: 'description', content: siteDescription }]}
+          title={siteTitle}
+        />
 
-          <Grid>
-            {posts.map(({ node }) => {
-              return <Post key={node.fields.slug} post={node} />;
-            })}
-          </Grid>
-        </Layout>
-      </ThemeProvider>
+        <Grid>
+          {posts.map(({ node }) => {
+            return <Post key={node.fields.slug} post={node} />;
+          })}
+        </Grid>
+      </Layout>
     );
   }
 }

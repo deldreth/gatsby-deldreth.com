@@ -39,11 +39,11 @@ const Container = styled('div')`
   justify-content: flex-start;
   margin-left: auto;
   margin-right: auto;
-  background-color: #01121f;
-  color: #c792ea;
+
+  background-color: ${props => props.theme.color.nearblack};
   font-size: ${rhythm(1.5)};
   padding: ${rhythm(1)};
-  border-bottom: 1px solid #122d42;
+  border-bottom: 1px solid ${props => props.theme.color.border};
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 
   @media ${props => props.theme.media.sm} {
@@ -53,7 +53,10 @@ const Container = styled('div')`
 
 const H1 = styled('h1')`
   ${scale(1)} margin: 0;
-  color: #c792ea;
+
+  a {
+    color: ${props => props.theme.color.purple};
+  }
 `;
 
 const Icons = styled('div')`
@@ -61,6 +64,7 @@ const Icons = styled('div')`
   right: ${rhythm(1)};
 
   a {
+    color: ${props => props.theme.color.purple};
     margin: 0 0 0 ${rhythm(1)};
 
     img {

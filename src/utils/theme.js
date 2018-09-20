@@ -18,4 +18,19 @@ const media = {
 
 export default {
   media,
+  color: {
+    border: '#122D42',
+    nearblack: '#011627',
+    darkblue: '#0B2942',
+    gray: '#5E7D96',
+    blue: '#82AAFF',
+    teal: '#68D7C3',
+    green: '#ADDB67',
+    yellow: '#ECC48D',
+    orange: '#F78C6C',
+    red: '#D3423E',
+    purple: '#C792EA',
+    lightgray: '#D6DEEB',
+    white: '#F7F7F7',
+  },
 };
