@@ -48,7 +48,8 @@
     "gh-pages": "^1.1.0",
     "husky": "^0.14.3",
     "prettier": "^1.14.2",
-    "pretty-quick": "^1.6.0"
+    "pretty-quick": "^1.6.0",
+    "prop-types": "^15.6.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [

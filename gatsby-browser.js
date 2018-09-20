@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ThemeProvider } from 'emotion-theming';
 import { injectGlobal } from 'react-emotion';
 
 import theme from './src/utils/theme';
+import WrapProvider from './wrap-provider';
 
 injectGlobal`
   body {
@@ -28,6 +28,4 @@ injectGlobal`
   }
 `;
 
-export const wrapRootElement = ({ element }) => {
-  return <ThemeProvider theme={theme}>{element}</ThemeProvider>;
-};
+export const wrapRootElement = WrapProvider;
