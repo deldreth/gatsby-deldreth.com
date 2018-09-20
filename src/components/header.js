@@ -40,7 +40,7 @@ const Container = styled('div')`
   margin-left: auto;
   margin-right: auto;
 
-  background-color: ${props => props.theme.color.nearblack};
+  background-color: ${props => props.theme.color.woahblack};
   font-size: ${rhythm(1.5)};
   padding: ${rhythm(1)};
   border-bottom: 1px solid ${props => props.theme.color.border};

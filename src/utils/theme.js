@@ -20,6 +20,7 @@ export default {
   media,
   color: {
     border: '#122D42',
+    woahblack: '#01121F',
     nearblack: '#011627',
     darkblue: '#0B2942',
     gray: '#5E7D96',
