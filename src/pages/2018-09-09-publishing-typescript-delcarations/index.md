@@ -131,10 +131,6 @@ Notice that I'm importing package.json and specifically reference a field. I've 
   "devDependencies": {
     "rollup": "^0.66.0",
     "typescript": "^3.0.3"
-  },
-  "scripts": {
-    "compile": "tsc",
-    "postcompile": "rollup -c"
   }
 }
 ```
@@ -148,7 +144,16 @@ I've added two short scripts to the package.json to faciliate compiling and bund
 ```json
 // package.json
 {
-  ...,
+  "name": "es-ts-module-1",
+  "version": "1.0.0",
+  "author": "Devin Eldreth",
+  "license": "MIT",
+  "main": "dist/ex-ts-module-one.cjs.js",
+  "module": "dist/index.js",
+  "devDependencies": {
+    "rollup": "^0.66.0",
+    "typescript": "^3.0.3"
+  },
   "scripts": {
     "compile": "tsc",
     "postcompile": "rollup -c"
