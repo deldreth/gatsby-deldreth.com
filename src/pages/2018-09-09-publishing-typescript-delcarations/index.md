@@ -3,16 +3,15 @@ title: Publish TypeScript module delcarations with rollup
 date: '2018-09-09T00:00:00.284Z'
 tags: ['typescript', 'npm', 'rollup']
 thumbnail: '../2017-12-12-migrating-team-from-flow/typescript.png'
-published: false
 ---
 
 It seems there's some tightly guarded industry secrets around publishing TypeScript module declarations effectively. Let's break it down.
 
 <!-- end -->
 
-Here I was, one day, coding away on a shared internal module for our npm registry when I realized that, despite having used modules with TypeScript delcarations, I had never written any on my own. Little did I know that I was about to embark on a deep journey riddled with vague "just do this" remarks.
+Here I was, one day, coding away on a shared internal module for our npm registry when I realized that, despite having used modules with TypeScript delcarations, I had never written any on my own.
 
-All it all it ends up being relatively simple with a bit of nuance for slightly complicated setups. Really, this could apply to any bundler (webpack, parcel, or rollup). I picked rollup but you could apply this to any bundler.
+All it all it ends up being relatively simple. There's just a of nuance for slightly complicated setups. This could also apply to any bundler (webpack, parcel, or rollup). I've just picked rollup.
 
 [Example project can be found here](https://github.com/deldreth/blog-es-ts-module-1)
 
@@ -35,7 +34,7 @@ Firstly, structure your tsconfig like you're shipping a package that you as an a
 }
 ```
 
-I generally continue to target es5 for my modules. Your use case may vary. The `declaration` setting here instructs the compiler to emit declarations to your outDir. There are a number of other compiler options that can come in handy for more complicated setups.
+I generally continue to target es5 for my modules. Your use case may vary. The `declaration` setting here instructs the compiler to emit declarations to your outDir. There are other compiler options that can come in handy for more complicated setups.
 
 ```
 declarationDir - Specify directory for declarations
@@ -45,9 +44,7 @@ emitDeclarationOnly
 
 ### Running tsc on some sample modules
 
-This example is contrived. It's important instructing npm, and any future consumer of your module, that you actually have modules.
-
-In this project two files sit in a `src` directory.
+I've outlined a very basic module that we're going to ship. The default export of Module1 is a class that has as single method `request` which returns a Response type interface.
 
 ```typescript
 // src/Module1.ts defines an interface and a simple class:
@@ -77,11 +74,11 @@ export function test(): Response {
 }
 ```
 
-Simple, but we've outlined enough to setup our modules. If we run the compiler against these files with our config above we're given four files. Two are es5 modules and the other two are delcarations.
+Simple, but we've outlined enough to setup our modules. If we run the compiler against these files with our config above we're given four files. Two are es5 modules and the other two are delcarations (`*.d.ts`).
 
 ## Inform npm of your es module
 
-In this example we're shipping es5 modules. These same applies if you're shipping es6 or even just TypeScript. Inform npm the of default module for your package by simply adding the `"module": "<dir>"` key value pair. It's quite literally defined as:
+This package.json configuration can be used reguardless of whether you're shiping es modules or not. Inform npm the of default module for your package by adding the `"module": "<dir>"` key value pair. It's quite literally defined as:
 
 > An ECMAScript module ID that is the primary entry point of your program
 
@@ -104,7 +101,7 @@ In this example we're shipping es5 modules. These same applies if you're shippin
 
 ## Bundling with rollup
 
-I've gone with commonjs for this example and a very simple rollup config.
+Here I've gone with commonjs bundle to keep this rollup config simple.
 
 ```javascript
 // rollup.config.js
@@ -121,7 +118,7 @@ export default {
 };
 ```
 
-Notice that I'm importing package.json and specifically reference a field. I've updated the main field to be the location of the bundle. We're also not using any plugins with rollup so everything is bundled from our compiled JavaScript.
+Notice that I'm importing package.json and specifically reference a field. I've updated the main field to be the location of the bundle. We're also not using any plugins with rollup so everything is bundled from our TypeScript compiled JavaScript.
 
 ```json
 {
@@ -146,7 +143,7 @@ This field is most common and behaves much like our `module` setting above. The 
 
 ### Two simple scripts to wrap everything up
 
-In this project I've added two short scripts to the package.json to faciliate compiling and bundling.
+I've added two short scripts to the package.json to faciliate compiling and bundling.
 
 ```json
 // package.json
@@ -159,15 +156,15 @@ In this project I've added two short scripts to the package.json to faciliate co
 }
 ```
 
-Compile then rollup.
+Compile then rollup. Yay!
 
 ## Another variation (shipping TypeScript modules directly)
 
-The TypeScript compiler will resolve module dependencies too. If you're living in a world where you know that your module will be consumed as TypeScript you can set `"module": "src/index.ts"`.
+The TypeScript compiler will resolve module dependencies too. If you're living in a world where you know that your module will be consumed as TypeScript you can set `"module": "src/index.ts"`. In this situation you wouldn't even need to worry about compiling or bundling (just make sure you set your peerDependencies relative to the version of TypeScript you're compilation needs).
 
 ## Ship type declarations without worrying about modules
 
-TypeScript will look for two package.json fields when resolving dependencies: `types` and `typings`. If you're in a situation where you just need to ship types you could easily specify the emit declaration directory in your tsconfig, set either of those fields and update the `files` field in your package.json. This way anyone consuming your module with TypeScript will be able to utilize your types.
+TypeScript will also look for two package.json fields when resolving dependencies: `types` and `typings`. If you're in a situation where you just need to ship types you could easily specify the emit declaration directory in your tsconfig, set either of those fields and update the `files` field in your package.json. This way anyone consuming your module with TypeScript will be able to utilize your types.
 
 ## Caveats
 
@@ -177,4 +174,9 @@ This setup does **not** handle the situation where tests exist alongside your so
 
 ## Takeaway
 
-The TypeScript compiler gives you a powerful set of tools to make the distribution and consumption of your module and bundle simpler.
+The TypeScript compiler gives you a powerful set of tools to make the distribution and consumption of your module and its types simpler. We can use the compiled JavaScript to bypass more complicated bundler setups.
+
+1. Configure tsconfig to emit declarations.
+2. Update package.json's module field to be your es module entry point.
+3. Bundle your module if need be.
+4. Update package.json's main field to be your module entry point.
