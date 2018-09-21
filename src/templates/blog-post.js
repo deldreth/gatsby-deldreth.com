@@ -21,7 +21,21 @@ class BlogPostTemplate extends React.Component {
       <LayoutPost>
         <Helmet
           htmlAttributes={{ lang: 'en' }}
-          meta={[{ name: 'description', content: siteDescription }]}
+          meta={[
+            { name: 'description', content: siteDescription },
+            { name: 'twitter:card', content: 'summary' },
+            { name: 'twitter:creator', content: '@deldreth' },
+            { name: 'og:title', content: siteTitle },
+            { name: 'og:description', content: post.excerpt },
+            {
+              name: 'og:image',
+              content: post.frontmatter.thumbnail
+                ? `${this.props.data.site.siteMetadata.siteUrl}${
+                    post.frontmatter.thumbnail.publicURL
+                  }`
+                : require('../assets/walter.png'),
+            },
+          ]}
           title={`${post.frontmatter.title} | ${siteTitle}`}
         />
         <h1>{post.frontmatter.title}</h1>
@@ -68,6 +82,7 @@ export const pageQuery = graphql`
       siteMetadata {
         title
         author
+        siteUrl
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -77,6 +92,9 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM D YYYY")
+        thumbnail {
+          publicURL
+        }
       }
     }
   }
