@@ -1,5 +1,5 @@
 ---
-title: Publish TypeScript module declarations with rollup
+title: Publish TypeScript module declarations and bundling with rollup
 date: '2018-09-09T00:00:00.284Z'
 tags: ['typescript', 'npm', 'rollup']
 thumbnail: '../2017-12-12-migrating-team-from-flow/typescript.png'
