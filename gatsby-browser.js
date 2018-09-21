@@ -4,6 +4,7 @@ import { injectGlobal } from 'react-emotion';
 
 import theme from './src/utils/theme';
 import WrapProvider from './wrap-provider';
+import { rhythm } from './src/utils/typography';
 
 injectGlobal`
   body {
@@ -25,6 +26,13 @@ injectGlobal`
 
   a:hover {
     text-decoration: underline;
+  }
+
+  blockquote {
+    color: ${theme.color.orange};
+    border-left: ${rhythm(1 / 9)} solid ${theme.color.orange};
+    padding-left: ${rhythm(1 / 2)};
+    margin: 0 ${rhythm(1)} ${rhythm(1)} ${rhythm(1)};
   }
 `;
 

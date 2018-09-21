@@ -14,10 +14,12 @@ export default function Post(props) {
       style={{ display: 'flex', flexDirection: 'column' }}
     >
       {props.post.frontmatter.thumbnail && (
-        <Thumbnail
-          backgroundColor={props.post.frontmatter.thumbnailBg}
-          sizes={props.post.frontmatter.thumbnail.childImageSharp.sizes}
-        />
+        <Link to={props.post.fields.slug}>
+          <Thumbnail
+            backgroundColor={props.post.frontmatter.thumbnailBg}
+            sizes={props.post.frontmatter.thumbnail.childImageSharp.sizes}
+          />
+        </Link>
       )}
 
       <h3

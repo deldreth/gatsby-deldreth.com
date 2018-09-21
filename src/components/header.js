@@ -57,6 +57,10 @@ const H1 = styled('h1')`
   a {
     color: ${props => props.theme.color.purple};
   }
+
+  a:hover {
+    text-decoration: none;
+  }
 `;
 
 const Icons = styled('div')`
