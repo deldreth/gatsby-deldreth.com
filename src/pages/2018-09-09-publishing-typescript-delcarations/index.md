@@ -1,5 +1,5 @@
 ---
-title: Publish TypeScript module delcarations with rollup
+title: Publish TypeScript module declarations with rollup
 date: '2018-09-09T00:00:00.284Z'
 tags: ['typescript', 'npm', 'rollup']
 thumbnail: '../2017-12-12-migrating-team-from-flow/typescript.png'
@@ -9,7 +9,7 @@ It seems there's some tightly guarded industry secrets around publishing TypeScr
 
 <!-- end -->
 
-Here I was, one day, coding away on a shared internal module for our npm registry when I realized that, despite having used modules with TypeScript delcarations, I had never written any on my own.
+Here I was, one day, coding away on a shared internal module for our npm registry when I realized that, despite having used modules with TypeScript declarations, I had never written any on my own.
 
 All it all it ends up being relatively simple. There's just a of nuance for slightly complicated setups. This could also apply to any bundler (webpack, parcel, or rollup). I've just picked rollup.
 
@@ -74,7 +74,7 @@ export function test(): Response {
 }
 ```
 
-Simple, but we've outlined enough to setup our modules. If we run the compiler against these files with our config above we're given four files. Two are es5 modules and the other two are delcarations (`*.d.ts`).
+Simple, but we've outlined enough to setup our modules. If we run the compiler against these files with our config above we're given four files. Two are es5 modules and the other two are declarations (`*.d.ts`).
 
 ## Inform npm of your es module
 
