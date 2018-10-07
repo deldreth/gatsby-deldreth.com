@@ -39,6 +39,8 @@ I'm a huge proponent of using whatever technology solves the problem quickly, ex
 
 Your schema defines the shape and relationship of your data. It specifies the type values of fields returned by queries, providing queries and mutations with arguments and their returns. As we'll see later there are services like AppSync and Prisma that can use your schema to help map data to its source.
 
+For our service imagine we're creating a cat adoption agency management application. We need to store adoption agency locations and the cats that they shelter.
+
 ## Scalar types
 
 When defining your schema each field is assigned a type. GraphQL supports five scalar types `Int`, `Float`, `Boolean`, `String`, and `ID`. Ending a type definition with an exclaimation mark indicates that the field is non-nullable. Wrapping a type definition in square brackets indicates a list of that type.
@@ -62,9 +64,7 @@ type Cat {
 }
 ```
 
-Our cat object type has four fields made up of different scalars. T name field is the only field that cannot be null.
-
-Imagine we're creating a cat adoption agency management application. The agency is a single organization with multiple locations. We want to define a relationship of a location to the cats in their care.
+Our cat object type has four fields made up of different scalars. The name field is the only field that cannot be null.
 
 ```graphql
 type Location {
@@ -74,7 +74,7 @@ type Location {
 }
 ```
 
-I've defined another object type called `Location` that has an id, name, and list of cats. Note the placement of the exclaimation mark on `[Cat!]!`. This specifies that the field cats will be a non-nullable list that could be empty. The relationship is beginning to form but we need to update our Cat object type to ultimately reflect our schema.
+We want to represent the relationship of an agency location to the cats in their care. I've defined another object type called `Location` that has an id, name, and list of cats. Note the placement of the exclaimation mark on `[Cat!]!`. This specifies that the field cats will be a non-nullable list that must contain a at least one cat. We should also go ahead and update our cat object to further this relationship. Ensuring that if we only have a cat we can easily resolve at which location the cat is sheltered.
 
 ```graphql
 type Cat {
@@ -87,11 +87,11 @@ type Cat {
 }
 ```
 
-I've added a bit more complexity to our `Cat` type. It will probably need an id field at some point and we may want to resolve the location of an individual cat. With these two object types we can write a few queries.
+The cat type will probably need an id field at some point and we may want to resolve the location of an individual cat.
 
 ## Queries
 
-By convention we generally create an object type called Query that defines a few queries for our schema. The definition of a query is much like that of a field on any other object type (in fact fields on any object type can have arguments).
+By convention we generally create an object type called Query that defines a queries for our schema. The definition of a query is much like that of a field on any other object type (in fact fields on any object type can have arguments).
 
 ```graphql
 type Query {
@@ -116,14 +116,12 @@ At this point our Query object contains three queries: `location`, `cat`, and `g
 }
 ```
 
-Writing queries for execution names the fields we want. In this case we're getting the name, and the ids, names, and breeds of the cats at location 42.
+Writing queries for execution names the fields we want. In this case we're getting the agency name, and the ids, names, and breeds of the cats at location 42.
 
-## Named queries
-
-While the regular query syntax works fine for some situations most applications are going to need provided execution context for queries. GraphQL clients and servers provide named queries support. I'll go into more detail about its implementation but it functions largely as a value interpolation mechanism.
+You may also write a query as follows:
 
 ```graphql
-query getLocation($id: ID!) {
+query {
   location(id: $id) {
     name
     cats {
@@ -135,7 +133,24 @@ query getLocation($id: ID!) {
 }
 ```
 
-The named query here is `getLocation` and it takes an id value and passes that value into the same location query. Different client implementations are going to expose the execution of this different. I'll go further into details at a later point.
+## Named queries
+
+While the regular query syntax works fine for some situations most applications are going to need provided execution context for queries. GraphQL clients and servers provide named queries support. I'll go into more detail about its implementation but it functions largely as a value interpolation mechanism.
+
+```graphql
+query GetLocation($id: ID!) {
+  location(id: $id) {
+    name
+    cats {
+      id
+      name
+      breed
+    }
+  }
+}
+```
+
+The named query here is `GetLocation` and it takes an id value and passes that value into the same location query.
 
 ## Mutations
 
@@ -161,7 +176,7 @@ type Mutation {
 
 Notice that I've also introduced a new organizational type called an input type. Input types allow you to specify multiple fields as an object type passed to a single field. In the case of these two mutations each takes an argument of input that have values mapped to different input types.
 
-## Execution
+## Mutation execution
 
 Executing a mutution is similar to the named query above, and like the named queries we will see later that these named mutations are also available through our client.
 
@@ -232,6 +247,6 @@ schema {
 }
 ```
 
-There's a great deal more that can be defined and done with GraphQL. I've kepted it simple here to outline the basics.
+There's a great deal more that can be done with GraphQL. I've kepted it simple here to outline the basics.
 
 In part two of this article I'll be creating creating a GraphQL server on top of Prisma and MySQL. Detailing how we can take our current schema, turn it into a relational database schema, and then use Prisma to faciliate the inbetweens of Apollo Server and MySQL.
