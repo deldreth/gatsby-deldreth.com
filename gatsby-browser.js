@@ -17,6 +17,7 @@ injectGlobal`
   h4 a,
   h5 a {
     color: ${theme.color.blue};
+    line-height: 1.45;
   }
 
   a {

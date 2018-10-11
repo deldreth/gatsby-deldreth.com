@@ -24,7 +24,7 @@ export default function Post(props) {
 
       <h3
         style={{
-          marginBottom: rhythm(1),
+          marginBottom: rhythm(0.5),
         }}
       >
         <Link to={props.post.fields.slug}>{props.post.frontmatter.title}</Link>

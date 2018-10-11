@@ -24,7 +24,7 @@ const typography = new Typography({
       styles: ['400'],
     },
   ],
-  overrideStyles: ({ rhythm }, options, styles) => ({
+  overrideStyles: ({ rhythm, scale }, options, styles) => ({
     'pre[class*="language-"]': {
       marginBottom: rhythm(1),
     },
