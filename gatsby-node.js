@@ -58,6 +58,7 @@ exports.createPages = ({ graphql, actions }) => {
             component: blogPost,
             context: {
               slug: post.node.fields.slug,
+              tags: post.node.frontmatter.tags,
               previous,
               next,
             },

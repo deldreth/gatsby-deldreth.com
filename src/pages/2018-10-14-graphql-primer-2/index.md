@@ -22,6 +22,7 @@ Previously, I covered the basics of GraphQL schema definition including types, q
   - [Mutations](/2018-10-05-graphql-primer-1#schema-mutations)
 - Writing a GraphQL service and server on top of MySQL
   - [Prisma datamodel](#prisma-datamodel)
+  - [Generated schema](#graphql-generate)
 - Querying: fetch, GraphiQL, and other clients
 - Apollo client
 - Queries in react-apollo
@@ -89,7 +90,13 @@ endpoint: http://localhost:4466
 datamodel: datamodel.graphql
 ```
 
-That's it for the setup! Now to actually writing our service.
+That's it for the setup! Once you've got it set you can use the following command to pull the images and start your backend services.
+
+```
+docker-compose -f database/docker-compose.yml up -d
+```
+
+Now to actually writing our service.
 
 # Writing a GraphQL service and server on top of MySQL
 
@@ -164,3 +171,15 @@ type Cat {
   location: Location
 }
 ```
+
+That's it! Relatively simple for the case of this project. If you're following along you can place the contents of that snippet in `database/datamodel.graphql`. Once there you can deploy your datamodel to the dockerized Prisma service with the following command.
+
+```
+npx prisma deploy
+```
+
+If you've gotten green lights across the board then that means you have a working data layer mapped through Prisma to your MySQL server. If you've installed a GraphQL client you should be able to inspect the schema at `http://localhost:4466`. Take note about how this schema differs from our intended one. Prisma makes a lot of useful assumptions about how we want to faciliate interacting with our data. It provides a number of ORM like types for querying data. We will use this schema to write the server.
+
+<a name="graphql-generate"></a>
+
+## Generated schema

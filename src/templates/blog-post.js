@@ -9,13 +9,14 @@ import '../prism-nightowl.css';
 import LayoutPost from '../components/layouts/post';
 import { rhythm, scale } from '../utils/typography';
 import Pagination from './blog-pagination';
+import Related from './blog-related';
 
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark;
     const siteTitle = get(this.props, 'data.site.siteMetadata.title');
     const siteDescription = post.excerpt;
-
+    console.log(this.props);
     return (
       <LayoutPost>
         <Helmet
@@ -42,6 +43,8 @@ class BlogPostTemplate extends React.Component {
 
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
 
+        <Related edges={this.props.data.allMarkdownRemark.edges} />
+
         <Pagination pageContext={this.props.pageContext} />
       </LayoutPost>
     );
@@ -51,7 +54,7 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query BlogPostBySlug($slug: String!, $tags: [String!]!) {
     site {
       siteMetadata {
         title
@@ -68,6 +71,22 @@ export const pageQuery = graphql`
         date(formatString: "MMMM D YYYY")
         thumbnail {
           publicURL
+        }
+      }
+    }
+    allMarkdownRemark(
+      limit: 5
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { tags: { in: $tags } } }
+    ) {
+      edges {
+        node {
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+          }
         }
       }
     }
