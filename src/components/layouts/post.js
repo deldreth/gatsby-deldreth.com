@@ -18,5 +18,5 @@ const Container = styled('div')`
   margin-left: auto;
   margin-right: auto;
   max-width: 768px;
-  padding: 48px 16px 16px 16px;
+  padding: 48px 16px;
 `;

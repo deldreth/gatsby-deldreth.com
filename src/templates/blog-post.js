@@ -1,15 +1,14 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 import get from 'lodash/get';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import '../prism-nightowl.css';
 
 import LayoutPost from '../components/layouts/post';
 import { rhythm, scale } from '../utils/typography';
-import styled from 'react-emotion';
+import Pagination from './blog-pagination';
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -49,31 +48,6 @@ class BlogPostTemplate extends React.Component {
   }
 }
 
-function Pagination(props) {
-  const { previous, next } = props.pageContext;
-
-  return (
-    <div
-      className={css`
-        display: flex;
-        justify-content: space-between;
-      `}
-    >
-      {previous && (
-        <StyledLink to={previous.fields.slug} rel="prev">
-          <FaChevronLeft /> {previous.frontmatter.title}
-        </StyledLink>
-      )}
-
-      {next && (
-        <StyledLink to={next.fields.slug} rel="next">
-          {next.frontmatter.title} <FaChevronRight />
-        </StyledLink>
-      )}
-    </div>
-  );
-}
-
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
@@ -104,13 +78,4 @@ const Date = styled('div')`
   color: #68d7c3;
   ${scale(-1 / 9)};
   margin: 0 0 ${rhythm(1 / 4)};
-`;
-
-const StyledLink = styled(Link)`
-  color: #011627;
-  display: flex;
-  align-items: center;
-  background-color: #5e7d96;
-  border-radius: 100px;
-  padding: 4px 16px;
 `;
