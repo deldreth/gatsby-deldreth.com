@@ -20,9 +20,13 @@ Previously, I covered the basics of GraphQL schema definition including types, q
   - [Object types](/2018-10-05-graphql-primer-1#schema-object)
   - [Queries](/2018-10-05-graphql-primer-1#schema-queries)
   - [Mutations](/2018-10-05-graphql-primer-1#schema-mutations)
-- Writing a GraphQL service and server on top of MySQL
+- [Writing a GraphQL service on top of MySQL](#writing-service)
   - [Prisma datamodel](#prisma-datamodel)
   - [Generated schema](#graphql-generate)
+- [Writing a GraphQL server with Apollo Server](#writing-server)
+  - [The rest of the schema](#writing-schema)
+  - [Resolvers](#writing-resolvers)
+  - [Wrapping up](#writing-finish)
 - Querying: fetch, GraphiQL, and other clients
 - Apollo client
 - Queries in react-apollo
@@ -98,7 +102,9 @@ docker-compose -f database/docker-compose.yml up -d
 
 Now to actually writing our service.
 
-# Writing a GraphQL service and server on top of MySQL
+<a name="writing-service"></a>
+
+# Writing a GraphQL service on top of MySQL
 
 For quick reference here's the final schema that we created in part one.
 
@@ -183,3 +189,97 @@ If you've gotten green lights across the board then that means you have a workin
 <a name="graphql-generate"></a>
 
 ## Generated schema
+
+The [graphql cli](https://github.com/graphql-cli/graphql-cli) provides a number of useful commands to work with schemas and services. In this case we need to generate the schema for the GraphQL server. It can even generate template projects for servers and clients. It's quite useful for getting started but we specifically want to focus on the `get-schema` command. It's going to allow us to generate a new schema file for our server. Before we do that, however, we need to create a `.graphqlconfig.yml` file.
+
+### .graphqlconfig.yml
+
+In the root directory of our server we'll create a `.graphqlconfig.yml' (or json, if you prefer) and provide it with two project directives`app`and`database`. You could potentially have any number of projects represented in a single file. This file is extremely useful in team situations. Many GraphQL application can use this project file to manage connections to your services. Here we're just describing the location of our schemas (generated and database) as well as the endpoint on which the server will eventually be running.
+
+```yml
+#.graphqlconfig.yml
+projects:
+  app:
+    schemaPath: src/schema.graphql
+    extensions:
+      endpoints:
+        default: http://localhost:4000
+  database:
+    schemaPath: src/generated/prisma.graphql
+    extensions:
+      prisma: database/prisma.yml
+```
+
+Here is graphql-playground after opening the project directory with the above .graphqlconfig. Two projects `app` and `database`, and the default configurations for them.
+
+![GraphQL Playground](graphql_playground_1.png 'GraphQL Playground')
+
+If you're interested in learning more about the graphql-config protocol checkout the [specification](https://github.com/prisma/graphql-config/blob/master/specification.md).
+
+Now that our .graphqlconfig is ready you may noticed the `src/generated/prisma.graphl` and that there's no such file in our project yet.
+
+If you run the following command:
+
+```
+❯ npx graphql get-schema --project database
+```
+
+You should see:
+
+```
+project database - Schema file was created: src/generated/prisma.graphql
+```
+
+Inspecting the generated/prisma.graphql file shows a rather lengthy and complex schema that we did not actually define. This generated schema is what Prisma exposes from our data layer. If you're using graphql-playground with the two services defined above running you can see this schema upon inspection.
+
+![GraphQL Playground](graphql_playground_prisma.png 'GraphQL Playground')
+
+It's not important to go over all that's created by the generated schema, but it is a good idea to familiarize yourself with it. A number of the types defined within it will be used to create our server.
+
+<a name="writing-server"></a>
+
+# Writing a GraphQL server with Apollo Server
+
+To keep things simple for our server we will only be adding two new files. An index.js file and the rest of our schema. Up until now we've only been supplying the Prisma service with the data portions of our schema: Locations and Cats. Now we need to take the input types, queries, and mutations, and let Apollo Server know about them. Because the schema is interpreted at runtime and the Locations and Cats of our schema exist outside of the application side we need another package [graphql-import](https://github.com/prisma/graphql-import) to allows us to import types from one schema to another.
+
+<a name="writing-schema"></a>
+
+## The rest of the schema
+
+In the `src` directory create a `schema.graphql` file with the following contents. Here we're bringing the application side of our schema together with the data size. As mentioned before `graphql-import` is going to parse the schema and interpret the generated types at runtime.
+
+```graphql
+# import Location from './generated/prisma.graphql'
+# import Cat from './generated/prisma.graphql'
+
+input LocationInput {
+  name: String!
+}
+
+input CatInput {
+  name: String!
+  age: Int
+  weight: Float
+  breed: String
+}
+
+type Query {
+  location(id: ID!): Location!
+  cat(id: ID!): Cat!
+  getLocations: [Location]!
+}
+
+type Mutation {
+  addLocation(input: LocationInput): Location!
+  addCat(locationId: ID!, input: CatInput): Cat!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+```
+
+<a name="writing-resolvers"></a>
+
+## Resolvers
