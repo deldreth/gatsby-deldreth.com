@@ -4,7 +4,6 @@ date: '2018-10-14T00:00:00.284Z'
 tags: ['graphql', 'schema', 'api']
 thumbnail: '../2018-10-05-graphql-primer-1/graphql.png'
 thumbnailBg: '#fce7f4'
-published: false
 ---
 
 Previously, I covered the basics of GraphQL schema definition including types, queries, and mutations. In part two I'll be diving into creating a GraphQL service and server with Prisma, MySQL, and Apollo Server.
