@@ -4,15 +4,16 @@ date: '2018-10-14T00:00:00.284Z'
 tags: ['graphql', 'schema', 'api']
 thumbnail: '../2018-10-05-graphql-primer-1/graphql.png'
 thumbnailBg: '#fce7f4'
+published: false
 ---
 
 Previously, I covered the basics of GraphQL schema definition including types, queries, and mutations. In part two I'll be diving into creating a GraphQL service and server with Prisma, MySQL, and Apollo Server.
 
 <!-- end -->
 
-# Table of contents
+Previously: [GraphQL primer part one](/2018-10-05-graphql-primer-1)
 
-[Previously]()
+# Table of contents
 
 - [Introduction](/2018-10-05-graphql-primer-1#Introduction)
 - [Schema: types, queries, and mutations](/2018-10-05-graphql-primer-1#Schema)
@@ -27,7 +28,6 @@ Previously, I covered the basics of GraphQL schema definition including types, q
   - [The rest of the schema](#writing-schema)
   - [Resolvers](#writing-resolvers)
   - [Wrapping up](#writing-finish)
-- Querying: fetch, GraphiQL, and other clients
 - Apollo client
 - Queries in react-apollo
 - Mutations in react-apollo
@@ -283,3 +283,253 @@ schema {
 <a name="writing-resolvers"></a>
 
 ## Resolvers
+
+Now that we're about to write the server for our data we begin talking about resolvers. At a most basic level a resolver is just a function that resolves a field. Often enough a function that queries a database. They can exist at both the client and server side (depending on your setup) and be used to resolve any type including custom scalars, and most commonly queries and mutations.
+
+> Resolvers are functions that resolve data to a field.
+
+If you've been following along from the base repository linked at the beginning of this article you've probably noticed a bare bones index.js in src. It looks something like this:
+
+```javascript
+// src/index.js
+const { ApolloServer } = require('apollo-server');
+const { importSchema } = require('graphql-import');
+const { Prisma } = require('prisma-binding');
+const path = require('path');
+
+const resolvers = {};
+
+const server = new ApolloServer({
+  typeDefs: importSchema(path.resolve('src/schema.graphql')),
+  resolvers,
+  context: req => ({
+    ...req,
+    prisma: new Prisma({
+      typeDefs: 'src/generated/prisma.graphql',
+      endpoint: 'http://localhost:4466',
+    }),
+  }),
+});
+
+server.listen({ port: 4000 }).then(({ url }) => {
+  console.log(`🐈  🐈  🐈  ready at ${url}`);
+});
+```
+
+There's no magic here. We're creating an Apollo Server at port 4000. I've imported importSchema from graql-import to handle the custom imports within our application schema. And I'm also providing custom context to each request in the form of a Prisma instance. I've specifically left the resolvers object literal empty in order to define them now. Apollo Server will use the keys in the resolvers map to bind resolution of fields. For example, if we look at our application schema we only have two types we need to worry about creating resolvers for at this time: Query and Mutation. The key to graphql type binding is 1:1 so if we update the resolvers map to something like:
+
+```javascript
+const resolvers = {
+  Query: {},
+};
+```
+
+We are actually informing Apollo Server of the resolution of the Query type in our schema. I'm sure you can guess what's next. Defining the functions that resolve to the queries. All resolvers for Apollo Server have the following signature:
+
+```javascript
+fieldName(obj, args, context, info) { result }
+```
+
+A quick breakdown of the parameters for a resolver...
+`obj` - The result returned from a resolver of a parent field. In the case of nested fields this parameter provides further resolution for children.
+`args` - Object containing key value pairs of arguments passed to the query.
+`context` - Shared execution context from Apollo Server. In the case of our server this is where Prisma will be accesible.
+`info` - Contains information about the execution state of the query.
+
+### Query resolvers
+
+In the application schema we have three queries and our stubbed out resolvers can look something like:
+
+```javascript
+const resolvers = {
+  Query: {
+    location: (obj, args, context, info) => {},
+    cat: (obj, args, context, info) => {},
+    getLocations: (obj, args, context, info) => {},
+  },
+};
+```
+
+Of course, these won't function as is. We need to actually specify the resolution. In this case we're querying Prisma based on the generated schema. We do so through the `context` object. You can inspect the schema from Prisma to determine which fields need to be queried. For our queries we will just be using the `location`, `cat`, and `locations` types. You can also see what arguments the generated schema provides.
+
+![GraphQL Playground](graphql_playground_where.png 'Prisma where argument')
+
+For our location query resolver we can use the `where` argument from Prisma's schema to limit the results.
+
+```javascript
+const resolvers = {
+  Query: {
+    location: (obj, args, context, info) => {
+      return context.prisma.query.location(
+        {
+          where: { id: args.id },
+        },
+        info
+      );
+    },
+    cat: (obj, args, context, info) => {},
+    getLocations: (obj, args, context, info) => {},
+  },
+};
+```
+
+We now have one working resolver for our location query. It will take the id argument, query Prisma, which in turn queries MySQL, and resolves our location. Continuing, our query resolvers will look something like:
+
+```javascript
+const resolvers = {
+  Query: {
+    location: (obj, args, context, info) => {
+      return context.prisma.query.location(
+        {
+          where: { id: args.id },
+        },
+        info
+      );
+    },
+    cat: (obj, args, context, info) => {
+      return context.prisma.query.cat(
+        {
+          where: { id: args.id },
+        },
+        info
+      );
+    },
+    getLocations: (obj, args, context, info) => {
+      return context.prisma.query.locations({}, info);
+    },
+  },
+};
+```
+
+### Mutation resolvers
+
+I've shown what makes up a resolver for a query. Mutations are really not so different. They're still using Prisma to add or modify data.
+
+```javascript
+const resolvers = {
+  Query: {...},
+  Mutation: {
+    addCat: (obj, args, context, info) => {
+      return context.prisma.mutation.createCat(
+        {
+          data: {
+            name: args.input.name,
+            age: args.input.age,
+            weight: args.input.weight,
+            breed: args.input.breed,
+            location: {
+              connect: {
+                id: args.locationId
+              }
+            }
+          }
+        },
+        info
+      );
+    },
+    addLocation: (obj, args, context, info) => {
+      return context.prisma.mutation.createLocation(
+        {
+          data: {
+            name: args.input.name
+          }
+        },
+        info
+      );
+    }
+  }
+};
+```
+
+Here I'm mapping the input type arguments to the data object for the createCat and createLocation mutations. The result of the operation will be the resolved object (based on our schema).
+
+<a name="writing-finish"></a>
+
+## Wrapping up
+
+With the resolvers defined the server can function as expected. The example repository for this includes `nodemon` so you could run `npx nodemon src/index.js` to start the server. If you were to use graphql-playground to open the project directory (with the .graphqlconfig.yml file) you would see a two viable graphql schemas at the endpoints provided. One, the server, at 4000 and Prisma at 4466.
+
+In summation the server should look something like this:
+
+```javascript
+const { ApolloServer } = require('apollo-server');
+const { importSchema } = require('graphql-import');
+const { Prisma } = require('prisma-binding');
+const path = require('path');
+
+const resolvers = {
+  Query: {
+    location: (obj, args, context, info) => {
+      return context.prisma.query.location(
+        {
+          where: { id: args.id },
+        },
+        info
+      );
+    },
+    cat: (obj, args, context, info) => {
+      return context.prisma.query.cat(
+        {
+          where: { id: args.id },
+        },
+        info
+      );
+    },
+    getLocations: (obj, args, context, info) => {
+      return context.prisma.query.locations({}, info);
+    },
+  },
+  Mutation: {
+    addCat: (obj, args, context, info) => {
+      return context.prisma.mutation.createCat(
+        {
+          data: {
+            name: args.input.name,
+            age: args.input.age,
+            weight: args.input.weight,
+            breed: args.input.breed,
+            location: {
+              connect: {
+                id: args.locationId,
+              },
+            },
+          },
+        },
+        info
+      );
+    },
+    addLocation: (obj, args, context, info) => {
+      return context.prisma.mutation.createLocation(
+        {
+          data: {
+            name: args.input.name,
+          },
+        },
+        info
+      );
+    },
+  },
+};
+
+const typeDefs = importSchema(path.resolve('src/schema.graphql'));
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: req => ({
+    ...req,
+    prisma: new Prisma({
+      typeDefs: 'src/generated/prisma.graphql',
+      endpoint: 'http://localhost:4466',
+    }),
+  }),
+});
+
+server.listen({ port: 4000 }).then(({ url }) => {
+  console.log(`🐈  🐈  🐈  ready at ${url}`);
+});
+```
+
+This is a relatively straight forward server and schema. In some situations future resolvers could be defined for nested types but in general the Prisma generated schema fits most situations. You may also notice that all of queries to Prisma include the info arugment. This allows Prisma to determine the context of the query and resolve types based on its own schema.
+
+By now I've been mentioning [graphql-playground](https://github.com/prisma/graphql-playground) at length. Largely because it's quite useful for someone working in a team with a project that has multiple application schemas. There are others like graphiql that work just as well. Each have standalone desktop applications (if you prefer that).

@@ -12,12 +12,12 @@ In November I'll be giving a talk about GraphQL to the Asheville Javascript Deve
 
 # Table of contents
 
-- [Introduction](#Introduction)
-- [Schema: types, queries, and mutations](#Schema)
-  - [Scalar types](#schema-scalar)
-  - [Object types](#schema-object)
-  - [Queries](#schema-queries)
-  - [Mutations](#schema-mutations)
+- [Introduction](/2018-10-05-graphql-primer-1#Introduction)
+- [Schema: types, queries, and mutations](/2018-10-05-graphql-primer-1#Schema)
+  - [Scalar types](/2018-10-05-graphql-primer-1#schema-scalar)
+  - [Object types](/2018-10-05-graphql-primer-1#schema-object)
+  - [Queries](/2018-10-05-graphql-primer-1#schema-queries)
+  - [Mutations](/2018-10-05-graphql-primer-1#schema-mutations)
 - Writing a GraphQL service and server on top of MySQL
 - Querying: fetch, GraphiQL, and other clients
 - Apollo client
