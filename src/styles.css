@@ -19,3 +19,9 @@
     url('./assets/fonts/SourceSerifPro/SourceSerifPro-LightIt.ttf')
       format('truetype');
 }
+
+twitterwidget {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2em !important;
+}
