@@ -34,9 +34,13 @@ pre[class*='language-'] {
   box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.16);
 }
 
+.language-text {
+  padding: 0.2em;
+}
+
 /* Inline code */
 :not(pre) > code[class*='language-'] {
-  padding: 0.1em;
+  padding: 0.2em;
   border-radius: 0.3em;
   white-space: normal;
 }

@@ -1,7 +1,7 @@
 ---
 title: React 16.6.0 released
 date: '2018-10-24T00:00:00.284Z'
-tags: ['react', '16.6.0', 'releases']
+tags: ['react', '16.6.0', 'code-splitting']
 thumbnail: './react.png'
 ---
 
@@ -31,7 +31,7 @@ function App() {
 }
 ```
 
-You can see this in action [here](https://stackblitz.com/edit/react-xqazvl). The API for the Suspense component and lazy function are pretty straight forward. Suspense operates largely the same as a Fragment. Meaning you can scructure your component to render multiple lazy components within the same Suspense component.
+You can see this in action [here](https://stackblitz.com/edit/react-xqazvl). The API for the Suspense component and lazy function are pretty straight forward. Suspense operates largely the same as a Fragment. Meaning you can structure your component to render multiple lazy components within a single Suspense.
 
 One of the most useful places code-splitting shows its benefits is with routing.
 
