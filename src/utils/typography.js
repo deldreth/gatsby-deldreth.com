@@ -31,6 +31,9 @@ const typography = new Typography({
     ':not(pre) > code[class*="language-"], pre[class*="language-"]': {
       padding: rhythm(0.5),
     },
+    ':not(pre) > code[class="language-text"], pre[class="language-text"]': {
+      padding: rhythm(0.1),
+    },
   }),
 });
 
