@@ -69,5 +69,19 @@ module.exports = {
       },
     },
     `gatsby-plugin-emotion`,
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          {
+            resolve: 'gatsby-remark-embed-youtube',
+            options: {
+              width: 720,
+              height: 480,
+            },
+          },
+        ],
+      },
+    },
   ],
 };
