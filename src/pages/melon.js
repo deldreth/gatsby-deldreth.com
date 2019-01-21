@@ -18,7 +18,7 @@ export default function Melon(props) {
       </Helmet>
       <h1>About me, Devin Eldreth</h1>
       <p>
-        <Img src="http://github.com/deldreth.png" height={128} />
+        <Img src="https://avatars1.githubusercontent.com/u/233009?v=4" height={128} />
         I'm a father, husband, and front end software developer. I also have a
         penchant for watermelon iconography (and sometimes the fruiting bodies
         of citrullus lanatus). I've been developing software and web
