@@ -1,10 +1,10 @@
 {
-  "name": "gatsby-starter-blog",
-  "description": "Starter Gatsby Blog",
-  "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "name": "deldreth.com",
+  "description": "deldreth.com",
+  "version": "1.1.7",
+  "author": "Devin Eldreth",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby-starter-blog/issues"
+    "url": "https://github.com/deldreth/gatsby-deldreth.com"
   },
   "dependencies": {
     "emotion-server": "^9.2.8",
